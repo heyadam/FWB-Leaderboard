@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="tabletop.js" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script type="text/javascript">
+		window.onload = function() { init() };
+
+		var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?hl=en_US&hl=en_US&key=17kVZa7YB6kQ4ZzE1xhfsQz3evhATVNpaKNAy_5wHFfY&output=html';
+
+		function init() {
+		Tabletop.init( { key: public_spreadsheet_url,
+		                 callback: showInfo,
+		                 simpleSheet: true,
+		                 parseNumbers: true
+		             } )
+
+		}
+
+		function showInfo(data, tabletop) {
+
+			var komrank = data;
+
+			komrank.sort(function(a, b){
+ 				return a.komrank-b.komrank;
+			});
+
+			jQuery.each( komrank, function( i, val ) {
+			  console.log(val);
+
+				$( "#komtable" ).append( "<tr><td>" + val.komrank + "</td><td>" + val.rider + "</td><td>" + val.kompoints + "</td></tr>" );
+			});
+
+
+			var sprintrank = data;
+
+			sprintrank.sort(function(c, d){
+ 				return c.sprintrank-d.sprintrank;
+			});
+
+			jQuery.each( sprintrank, function( i, val ) {
+			  $( "#sprinttable" ).append( "<tr><td>" + val.sprintrank + "</td><td>" + val.rider + "</td><td>" + val.sprintpoints + "</td></tr>" );
+			});
+		}
+
+
+	</script>
+</head>
+<body>
+	<h1>KOM</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Rank</th>
+				<th>Name</th>
+				<th>Points</th>
+			</tr>
+		</thead>
+		<tbody id="komtable">
+		</tbody>
+	</table>
+
+		<h1>Sprint</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Rank</th>
+				<th>Name</th>
+				<th>Points</th>
+			</tr>
+		</thead>
+		<tbody id="sprinttable">
+		</tbody>
+	</table>
+
+</body>
+</html>
